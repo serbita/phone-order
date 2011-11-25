@@ -1,0 +1,38 @@
+<mockup version="1.0" skin="sketch" measuredW="581" measuredH="534" mockupW="435" mockupH="522">
+  <controls>
+    <control controlID="90" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="146" y="12" w="435" h="522" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>http%3A//mobile.murobar.com.ar/items/%3Cid-de-item%3E/show%3Fmesa%3D4%26p%3Dask%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="91" controlTypeID="com.balsamiq.mockups::Label" x="174" y="192" w="154" h="21" measuredW="144" measuredH="21" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Fernet%20Branca%20vaso%20%2415</text>
+      </controlProperties>
+    </control>
+    <control controlID="92" controlTypeID="com.balsamiq.mockups::SubTitle" x="156" y="98" w="411" h="-1" measuredW="203" measuredH="33" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>center</align>
+        <color>2101837</color>
+        <text>Henry%20and%20ford%20bar</text>
+      </controlProperties>
+    </control>
+    <control controlID="93" controlTypeID="com.balsamiq.mockups::IconLabel" x="523" y="94" w="-1" h="-1" measuredW="48" measuredH="69" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logo</text>
+      </controlProperties>
+    </control>
+    <control controlID="94" controlTypeID="com.balsamiq.mockups::Button" x="174" y="357" w="393" h="65" measuredW="258" measuredH="34" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>YIMIcon%7Csmall</icon>
+        <size>24</size>
+        <text>Pedir%20esta%20bebida%21%21%21</text>
+      </controlProperties>
+    </control>
+    <control controlID="95" controlTypeID="com.balsamiq.mockups::NumericStepper" x="174" y="252" w="-1" h="-1" measuredW="96" measuredH="24" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cantidad%202</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
