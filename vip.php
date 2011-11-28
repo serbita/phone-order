@@ -1,3 +1,19 @@
+<?php
+require_once 'functions.php';
+
+$data['id']=$_GET['id'];
+
+$conection = getConnection();
+
+$sqlText="SELECT * FROM item WHERE id=".$data['id'];
+$result = execQuery($conection,$sqlText);
+
+$item = mysql_fetch_array($result);
+
+echo $item['title'];
+
+?>
+
 <!DOCTYPE html>
 <head>
 </head>
