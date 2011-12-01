@@ -1,4 +1,4 @@
-GRAILS_VERSION="1.3.6"
+GRAILS_VERSION="1.3.7"
 GRAILS_HOME := $(subst grails-1.3.5,grails-${GRAILS_VERSION},${GRAILS_HOME})
 PATH := $(subst grails-1.3.5,grails-${GRAILS_VERSION},${PATH})
 
