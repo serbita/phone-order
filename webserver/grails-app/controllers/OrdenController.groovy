@@ -1,6 +1,6 @@
 
 
-class ItemController {
+class OrdenController {
 
     static scaffold = true
 }
