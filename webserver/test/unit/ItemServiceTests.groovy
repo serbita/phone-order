@@ -1,8 +1,8 @@
-package phone.order
+
 
 import grails.test.*
 
-class OrdenControllerTests extends ControllerUnitTestCase {
+class ItemServiceTests extends GrailsUnitTestCase {
     protected void setUp() {
         super.setUp()
     }
