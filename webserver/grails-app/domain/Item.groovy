@@ -5,9 +5,9 @@ class Item {
     String description
     double price
 
-    static belongsTo = User
+    static belongsTo = [user : User]
 
-    static hasMany = [ordens : Orden]                                
+    static hasMany = [ordens : Orden]
 
     static constraints = {
         description(nullable:true)
