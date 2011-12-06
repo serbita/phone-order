@@ -6,8 +6,6 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'orden.label', default: 'Orden')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
-        <g:javascript library="jquery" plugin="jquery"/>
-        <jqui:resources theme="darkness" />
     </head>
     <body>
         <div class="nav">
@@ -32,11 +30,9 @@
                         
                             <g:sortableColumn property="unit_price" title="${message(code: 'orden.unit_price.label', default: 'Unitprice')}" />
                         
-                            <th><g:message code="orden.collectorUser.label" default="Collector User" /></th>
-
                             <g:sortableColumn property="status" title="${message(code: 'orden.status.label', default: 'Status')}" />
-
-                            <th>Action</th>
+                        
+                            <th><g:message code="orden.collectorUser.label" default="Collector User" /></th>
                         
                         </tr>
                     </thead>
@@ -51,17 +47,11 @@
                             <td>${fieldValue(bean: ordenInstance, field: "total_amount")}</td>
                         
                             <td>${fieldValue(bean: ordenInstance, field: "unit_price")}</td>
-
+                        
+                            <td>${fieldValue(bean: ordenInstance, field: "status")}</td>
+                        
                             <td>${fieldValue(bean: ordenInstance, field: "collectorUser")}</td>
                         
-                            <td><div id="status_${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "status")}</div></td>
-                        
-                            <td><div id="action_${ordenInstance.id}">
-	                            <g:if test="${ordenInstance.status == 'Pending'}">
-                                        <a href="#" onclick="javascript:changeStatus(${ordenInstance.id});">Deliver</a>
-	                            </g:if>
-                       		</div>
-                            </td>                        
                         </tr>
                     </g:each>
                     </tbody>
@@ -71,19 +61,5 @@
                 <g:paginate total="${ordenInstanceTotal}" />
             </div>
         </div>
-
-        <script type="text/javascript">
-        function changeStatus(id) {
-            $.ajax({
-                    url: "changeStatus",
-                    data: "id=" + id,
-                    success: function(statusReturned) {
-                		$("#status_" + id).html(statusReturned);
-                		$("#action_" + id).html("");
-                    }
-                  });
-               };
-        </script>
-
     </body>
 </html>

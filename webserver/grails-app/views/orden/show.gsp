@@ -85,6 +85,13 @@
                             
                         </tr>
                     
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="orden.table.label" default="Table" /></td>
+                            
+                            <td valign="top" class="value"><g:link controller="table" action="show" id="${ordenInstance?.table?.id}">${ordenInstance?.table?.encodeAsHTML()}</g:link></td>
+                            
+                        </tr>
+                    
                     </tbody>
                 </table>
             </div>

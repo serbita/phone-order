@@ -14,9 +14,9 @@ class OrdenIntegrationTests extends GroovyTestCase {
                 def orden1 = new Orden(unit_price:2.1, quantity:2, total_amount:4.2, status:"Pending")
 
                 collectorUser.addToOrdens(orden1) 
-                item1.addToOrdens(orden1)
-
-                collectorUser.addToItems(item1) 
+                collectorUser.addToItems(item1)
+                
+                item1.addToOrdens(orden1)                 
                
                 assertEquals 1, User.get(collectorUser.id).ordens.size()
                 assertEquals 1, User.get(collectorUser.id).items.size()

@@ -82,6 +82,15 @@
                                 </td>
                             </tr>
                         
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="table"><g:message code="orden.table.label" default="Table" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: ordenInstance, field: 'table', 'errors')}">
+                                    <g:select name="table.id" from="${Table.list()}" optionKey="id" value="${ordenInstance?.table?.id}"  />
+                                </td>
+                            </tr>
+                        
                         </tbody>
                     </table>
                 </div>

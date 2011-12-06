@@ -95,12 +95,4 @@ class OrdenController {
             redirect(action: "list")
         }
     }
-
-    def changeStatus = {
-	def orden = Orden.findById(params.id)
-	orden.setStatus("Delivered")
-	if (!orden.hasErrors() && orden.save(flush: true)) {
-		render orden.status;
-	}
-    }
 }
