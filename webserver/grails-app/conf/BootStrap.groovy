@@ -8,8 +8,12 @@ class BootStrap {
     def init = { servletContext ->
 
                 def user = new User(nickname: 'serbita', name:'Seba',surname:'Menel', password: 'secret', homepage: 'http://www.serbita.com').save()
-                def item1 = new Item(title: "Fernet Branca vaso")
+                def item1 = new Item(title: "Fernet Branca vaso", description: "Fernet con Coca Cola", price: 25)
                 user.addToItems(item1)
+				
+				def table1 = new Table(name: "Mesa 1", description: "Cerca de la puerta")
+				user.addToTables(table1)
+				
 				def orden1 = new Orden(quantity:2, total_amount:20, unit_price:10, status: "Pending")
 				user.addToOrdens(orden1)
 				item1.addToOrdens(orden1)
