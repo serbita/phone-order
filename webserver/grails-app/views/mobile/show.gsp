@@ -30,6 +30,13 @@
                         </tr>
                         
                         <tr class="prop">
+                            <td valign="top" class="name">Price</td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: itemInstance, field: "price")}</td>
+                            
+                        </tr>                        
+                        
+                        <tr class="prop">
                             <td valign="top" class="name">Quantity</td>
                             
                             <td valign="top" class="value"><g:textField name="quantity" value="" /></td>

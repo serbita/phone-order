@@ -2,6 +2,9 @@
 
 class Table {
         static belongsTo = [user : User]
+		
+		static hasMany = [ordens : Orden]
+		
         String name
         String description
 
