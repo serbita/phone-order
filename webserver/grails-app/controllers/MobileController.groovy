@@ -6,30 +6,30 @@ class MobileController {
 		redirect(action: "list", params: params)
 	}
 	
-	//http://localhost:8080/mobile/list?table=2
+	//Muestra los items de una mesa dada. Utiil para pruebas. En produccion se reemplazaría con la hoja impresa con los QR
 	def list = {
-		
+		//Ejemplo: http://localhost:8080/mobile/list?table=2
 		def tableId = params.table
 		if (tableId == null)
 			tableId = 1 //default
 		def tableInstance = Table.get(tableId)
 
-		//TODO: Filtrar los items del user de la mesa pasado por parametro
+		//Filtro los items del user que pertenece a la mesa pasada por parametro
+		def items = Item.findAllByUser(tableInstance?.user, params)
 		
-		[itemInstanceList: Item.list(params), tableInstance: tableInstance]
+		[itemInstanceList: items, tableInstance: tableInstance]
 	}
 	
-	//http://localhost:8080/mobile/show?item=1&table=1
 	def show = {
+		//Ejemplo: http://localhost:8080/mobile/show?item=1&table=1
 		def itemParam = params.item
 		def tableParam = params.table
 		
 		def itemInstance = Item.get(itemParam)
 		def tableInstance = Table.get(tableParam)
 
-		if (!itemInstance) {
-			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'item.label', default: 'Item'), params.id])}"
-			redirect(action: "list")
+		if (!itemInstance || !tableInstance) {
+			[error: "Item o Mesa no existe"]
 		}
 		else {
 			[itemInstance: itemInstance, tableInstance: tableInstance]
@@ -50,7 +50,9 @@ class MobileController {
 		
 		if (newOrder.save(flush: true)) {
 			render(view: "success", model: [ordenInstance: newOrder])
-			
+		}
+		else {
+			render(view: "show", model: [itemInstance: item, tableInstance: table, error: "Error al crear la orden"])
 		}
 	}
 }

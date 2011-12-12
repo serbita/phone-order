@@ -19,6 +19,13 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
+            
+        <!-- div class="filter">
+        	<span>Todos</span>            
+        	<span>Pending</span>
+        	<span>Delivered</span>
+        </div-->            
+            
             <div class="list">
                 <table>
                     <thead>

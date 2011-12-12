@@ -2,12 +2,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <g:set var="entityName" value="${message(code: 'item.label', default: 'Item')}" />
         <title>Pedidos</title>
     </head>
     <body>
         <div>
             <h1>Muro Bar</h1>
+            
+            <g:if test="${error}">
+            	<p>${error}</p>
+            	<g:eachError><p>${it.defaultMessage}</p></g:eachError>
+            </g:if>
+                        
             <g:form action="save" >
             <g:hiddenField name="itemId" value="${itemInstance?.id}" />
             <g:hiddenField name="tableId" value="${tableInstance?.id}" />
@@ -16,30 +21,30 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name">Item</td>
+                            <td>Item</td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: itemInstance, field: "title")}&nbsp;(${fieldValue(bean: itemInstance, field: "id")})</td>
+                            <td>${fieldValue(bean: itemInstance, field: "title")}&nbsp;(${fieldValue(bean: itemInstance, field: "id")})</td>
                             
                         </tr>
 
                         <tr class="prop">
-                            <td valign="top" class="name">Table</td>
+                            <td>Table</td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: tableInstance, field: "name")}&nbsp;(${fieldValue(bean: tableInstance, field: "id")})</td>
+                            <td>${fieldValue(bean: tableInstance, field: "name")}&nbsp;(${fieldValue(bean: tableInstance, field: "id")})</td>
                             
                         </tr>
                         
                         <tr class="prop">
-                            <td valign="top" class="name">Price</td>
+                            <td>Price</td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: itemInstance, field: "price")}</td>
+                            <td>${fieldValue(bean: itemInstance, field: "price")}</td>
                             
                         </tr>                        
                         
                         <tr class="prop">
-                            <td valign="top" class="name">Quantity</td>
+                            <td>Quantity</td>
                             
-                            <td valign="top" class="value"><g:textField name="quantity" value="" /></td>
+                            <td><g:textField name="quantity" value="1" /></td>
                             
                         </tr>                        
                     
