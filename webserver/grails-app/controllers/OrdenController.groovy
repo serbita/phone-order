@@ -7,8 +7,20 @@ class OrdenController {
 	}
 	
 	def list = {
-		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		[ordenInstanceList: Orden.list(params), ordenInstanceTotal: Orden.count()]
+		//Descomentar cuando se utilice paginado
+		//params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		
+		def filter = params.filter
+		if (filter == null)
+			filter = "All"
+		
+		def ordenList
+		if (filter.equals("Pending") || filter.equals("Delivered"))
+			ordenList = Orden.findAllByStatus(filter)
+		else 
+			ordenList = Orden.list(params)
+		
+		[ordenInstanceList: ordenList, ordenInstanceTotal: ordenList.count(), filter: filter]
 	}
 	
 	def create = {
@@ -97,6 +109,7 @@ class OrdenController {
 	}
 	
 	def changeStatus = {
+		//TODO: Pendiente que al cambiar el estado de una orden, queda el filtro de la busqueda desactualizado
 		def orden = Orden.findById(params.id)
 		orden.setStatus("Delivered")
 		if (!orden.hasErrors() && orden.save(flush: true)) {

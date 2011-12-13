@@ -19,12 +19,13 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            
-        <!-- div class="filter">
-        	<span>Todos</span>            
-        	<span>Pending</span>
-        	<span>Delivered</span>
-        </div-->            
+
+        <div class="filter">
+<!-- All, Pending y Delivered deben estar en archivo de recursos 	-->
+        	<span><g:if test="${filter == 'All'}">Todos</g:if><g:else><g:link action="list">Todos</g:link></g:else></span>            
+        	<span><g:if test="${filter == 'Pending'}">Pending</g:if><g:else><g:link action="list" params="['filter': 'Pending']">Pending</g:link></g:else></span>
+        	<span><g:if test="${filter == 'Delivered'}">Delivered</g:if><g:else><g:link action="list" params="['filter': 'Delivered']">Delivered</g:link></g:else></span>
+        </div>            
             
             <div class="list">
                 <table>
@@ -49,7 +50,7 @@
                     </thead>
                     <tbody>
                     <g:each in="${ordenInstanceList}" status="i" var="ordenInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        <tr id="fila_${ordenInstance.id}" class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
                             <td><g:link action="show" id="${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "id")}</g:link></td>
                         
@@ -74,9 +75,11 @@
                     </tbody>
                 </table>
             </div>
+            <!-- Descomentar cuando se utilice paginado  
             <div class="paginateButtons">
                 <g:paginate total="${ordenInstanceTotal}" />
             </div>
+            -->
         </div>
 
         <script type="text/javascript">
@@ -87,6 +90,11 @@
                     success: function(statusReturned) {
                 		$("#status_" + id).html(statusReturned);
                 		$("#action_" + id).html("");
+                		//alert("${filter}");
+                		if ("${filter}" == "Pending")
+                		{
+                			$("#fila_" + id).remove();
+                		}
                     }
                   });
                };
