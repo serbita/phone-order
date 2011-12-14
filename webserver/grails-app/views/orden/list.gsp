@@ -20,11 +20,11 @@
             <div class="message">${flash.message}</div>
             </g:if>
 
-        <div class="filter">
+        <div class="statusFilter">
 <!-- All, Pending y Delivered deben estar en archivo de recursos 	-->
-        	<span><g:if test="${filter == 'All'}">Todos</g:if><g:else><g:link action="list">Todos</g:link></g:else></span>            
-        	<span><g:if test="${filter == 'Pending'}">Pending</g:if><g:else><g:link action="list" params="['filter': 'Pending']">Pending</g:link></g:else></span>
-        	<span><g:if test="${filter == 'Delivered'}">Delivered</g:if><g:else><g:link action="list" params="['filter': 'Delivered']">Delivered</g:link></g:else></span>
+        	<span><g:if test="${statusFilter == 'All'}">Todos</g:if><g:else><g:link action="list">Todos</g:link></g:else></span>            
+        	<span><g:if test="${statusFilter == 'Pending'}">Pending</g:if><g:else><g:link action="list" params="['statusFilter': 'Pending']">Pending</g:link></g:else></span>
+        	<span><g:if test="${statusFilter == 'Delivered'}">Delivered</g:if><g:else><g:link action="list" params="['statusFilter': 'Delivered']">Delivered</g:link></g:else></span>
         </div>            
             
             <div class="list">
@@ -41,6 +41,8 @@
                             <g:sortableColumn property="unit_price" title="${message(code: 'orden.unit_price.label', default: 'Unitprice')}" />
                         
                             <th><g:message code="orden.collectorUser.label" default="Collector User" /></th>
+                            
+                            <g:sortableColumn property="dateCreated" title="${message(code: 'orden.dateCreated.label', default: 'Date Created')}" />
 
                             <g:sortableColumn property="status" title="${message(code: 'orden.status.label', default: 'Status')}" />
 
@@ -61,6 +63,8 @@
                             <td>${fieldValue(bean: ordenInstance, field: "unit_price")}</td>
 
                             <td>${fieldValue(bean: ordenInstance, field: "collectorUser")}</td>
+                            
+                            <td><g:formatDate format="yyyy-MM-dd" date="${fieldValue(bean: ordenInstance, field: "dateCreated")}"/></td>
                         
                             <td><div id="status_${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "status")}</div></td>
                         
