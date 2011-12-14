@@ -121,7 +121,8 @@ class OrdenController {
 	def changeStatus = {
 		//TODO: Pendiente que al cambiar el estado de una orden, queda el filtro de la busqueda desactualizado
 		def orden = Orden.findById(params.id)
-		orden.setStatus("Delivered")
+                
+		orden.setStatus(params.status)
 		if (!orden.hasErrors() && orden.save(flush: true)) {
 			render orden.status;
 		}
