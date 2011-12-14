@@ -168,66 +168,53 @@
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">				
 				<tr>
 					<th class="table-header-repeat line-left"><a href="">Id</a></th>
+					<th class="table-header-repeat line-left"><a href="">Fecha</a></th>
 					<th class="table-header-repeat line-left minwidth-1"><a href="">Item</a>	</th>				
 
 					<th class="table-header-repeat line-left minwidth-1"><a href="">Cantidad</a></th>
 					<th class="table-header-repeat line-left"><a href="">Precio</a></th>
 					<th class="table-header-repeat line-left"><a href="">Total</a></th>
 					<th class="table-header-repeat line-left"><a href="">Estado</a></th>
-					<th class="table-header-options line-left"><a href="">Options</a></th>
+					<th class="table-header-options line-left"><a href="">Cambiar estado</a></th>
 				</tr>
                     <g:each in="${ordenInstanceList}" status="i" var="ordenInstance">
                         <tr class="${(i % 2) == 0 ? 'alternate-row' : 'even'}">
                         
                             <td><g:link action="show" id="${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "id")}</g:link></td>
+                            <td>${fieldValue(bean: ordenInstance, field: "dateCreated")}</td>
 
-                            <td>${fieldValue(bean: ordenInstance, field: "item")}</td>
+                            <td>${fieldValue(bean: ordenInstance, field: "item.title")}</td>
                             <td>${fieldValue(bean: ordenInstance, field: "quantity")}</td>
                             <td>${fieldValue(bean: ordenInstance, field: "unit_price")}</td>                                                    
                             <td>${fieldValue(bean: ordenInstance, field: "total_amount")}</td>
-                            <td><div id="status_${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "status")}</div></td>
-                            <td><div id="action_${ordenInstance.id}">
-	                            <g:if test="${ordenInstance.status == 'Pending'}"><a href="#" onclick="javascript:changeStatus(${ordenInstance.id});">Deliver</a></g:if>
-                       		</div>                       		
+                            <td>
+                                <div id="status_${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "status")}
+                                </div>
+                            </td>
+                            <td class="options-width">
+                                <div id="action_${ordenInstance.id}">
+                                        <g:if test="${ordenInstance.status == 'Pending'}">
+                                                <a href="#" onclick="javascript:changeStatus(${ordenInstance.id},'Delivered');" title="Cambiar a Entregado" class="icon-5 info-tooltip"></a>
+                                        </g:if>
+                                        <g:if test="${ordenInstance.status == 'Delivered'}">
+                                                <a href="#" onclick="javascript:changeStatus(${ordenInstance.id},'Pending');" title="Cambiar a Pendiente" class="icon-2 info-tooltip"></a>
+                                        </g:if>
+                       		</div> 
+                                                                     		
                             </td> 
 <%--                             <td>${fieldValue(bean: ordenInstance, field: "collectorUser")}</td>  --%>                                                   
                         </tr>
                     </g:each>				
+		
 				
-				<tr>
-					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
-					<td>George</td>
-					<td><a href="">george@mainevent.co.za</a></td>
-					<td>R250</td>
-					<td><a href="">www.mainevent.co.za</a></td>
-					<td class="options-width">
-					<a href="" title="Edit" class="icon-1 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-2 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
-					</td>
-				</tr>
-				<tr class="alternate-row">
-					<td><input  type="checkbox"/></td>
-					<td>Sabev</td>
-					<td>George</td>
-					<td><a href="">george@mainevent.co.za</a></td>
-					<td>R250</td>
-					<td><a href="">www.mainevent.co.za</a></td>
-					<td class="options-width">
-					<a href="" title="Edit" class="icon-1 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-2 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
-					</td>
-				</tr>
 				</table>
 				<!--  end product-table................................... --> 
 				</form>
 			</div>
+<!--a href="#" onclick="javascript:changeStatus(1,'Delivered');" title="Cambiar a Entregado" >1 a delivered</a><br -->
+<!--a href="#" onclick="javascript:changeStatus(1,'Pending');" title="Cambiar a Entregado" >1 a pending</a><br-->
+<!--a href="#" onclick="javascript:changeStatus(2,'Delivered');" title="Cambiar a Entregado" >2 a delivered</a><br-->
+<!--a href="#" onclick="javascript:changeStatus(2,'Pending');" title="Cambiar a Entregado" >2 a pending</a-->
 			<!--  end content-table  -->
 		
 			<!--  start actions-box ............................................... -->
@@ -288,9 +275,7 @@
 <!-- start footer -->         
 <div id="footer">
 	<!--  start footer-left -->
-	<div id="footer-left">
-	
-	Admin Skin &copy; Copyright Internet Dreams Ltd. <span id="spanYear"></span> <a href="">www.netdreams.co.uk</a>. All rights reserved.</div>
+	<div id="footer-left">SerCompany </div>
 	<!--  end footer-left -->
 	<div class="clear">&nbsp;</div>
 </div>
@@ -298,78 +283,33 @@
     
     
     
-        <div>
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
-        </div>
-        <div>
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
-            </g:if>
-     
-            
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'orden.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="quantity" title="${message(code: 'orden.quantity.label', default: 'Quantity')}" />
-                        
-                            <g:sortableColumn property="total_amount" title="${message(code: 'orden.total_amount.label', default: 'Totalamount')}" />
-                        
-                            <g:sortableColumn property="unit_price" title="${message(code: 'orden.unit_price.label', default: 'Unitprice')}" />
-                        
-                            <th><g:message code="orden.collectorUser.label" default="Collector User" /></th>
-
-                            <g:sortableColumn property="status" title="${message(code: 'orden.status.label', default: 'Status')}" />
-
-                            <th>Action</th>
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${ordenInstanceList}" status="i" var="ordenInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: ordenInstance, field: "quantity")}</td>
-                        
-                            <td>${fieldValue(bean: ordenInstance, field: "total_amount")}</td>
-                        
-                            <td>${fieldValue(bean: ordenInstance, field: "unit_price")}</td>
-
-                            <td>${fieldValue(bean: ordenInstance, field: "collectorUser")}</td>
-                        
-                            <td><div id="status_${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "status")}</div></td>
-                        
-                            <td><div id="action_${ordenInstance.id}">
-	                            <g:if test="${ordenInstance.status == 'Pending'}">
-                                        <a href="#" onclick="javascript:changeStatus(${ordenInstance.id});">Deliver</a>
-	                            </g:if>
-                       		</div>
-                            </td>                        
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
+        
             <div class="paginateButtons">
                 <g:paginate total="${ordenInstanceTotal}" />
             </div>
-        </div>
+
+
 
         <script type="text/javascript">
-        function changeStatus(id) {
+        function changeStatus(id,status) {
             $.ajax({
                     url: "changeStatus",
-                    data: "id=" + id,
+                    data: "id=" + id + "&status=" + status,
                     success: function(statusReturned) {
                 		$("#status_" + id).html(statusReturned);
-                		$("#action_" + id).html("");
+var local_status;
+var local_class;
+if (statusReturned == 'Delivered') {
+        local_status = 'Pending';
+local_class = 'icon-2 info-tooltip';
+local_title = 'Cambiar a Pendiente';
+                } else {
+local_status = 'Delivered';
+local_class = 'icon-5 info-tooltip'
+local_title = 'Cambiar a Entredado';
+}
+
+                		$("#action_" + id).html('<a href="#" onclick="javascript:changeStatus('+id+',\''+local_status+'\');"  class="'+local_class+'" title="'+local_title+'" ></a>');
                     }
                   });
                };

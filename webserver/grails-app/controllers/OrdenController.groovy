@@ -98,7 +98,8 @@ class OrdenController {
 	
 	def changeStatus = {
 		def orden = Orden.findById(params.id)
-		orden.setStatus("Delivered")
+                
+		orden.setStatus(params.status)
 		if (!orden.hasErrors() && orden.save(flush: true)) {
 			render orden.status;
 		}
