@@ -7,74 +7,30 @@ class OrdenController {
 	}
 	
 	def list = {
+		
 		//Descomentar cuando se utilice paginado
-		//params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		
 		def statusFilter = params.statusFilter
-		def Calendar fromDateFilter = params.fromDateFilter
-		def Calendar toDateFilter = params.toDateFilter
-		def long tableFilter = params.toDateFilter
-		tableFilter = 1
-		
-		fromDateFilter = Calendar.getInstance();
-		fromDateFilter.set(Calendar.HOUR, 0)
-		fromDateFilter.set(Calendar.MINUTE, 0)
-		fromDateFilter.set(Calendar.SECOND, 0)
-		
-		toDateFilter = Calendar.getInstance();
-		toDateFilter.set(Calendar.HOUR, 0)
-		toDateFilter.set(Calendar.MINUTE, 0)
-		toDateFilter.set(Calendar.SECOND, 0)
-		
+		def Date fromDateFilter = params.fromDateFilter	
+		def Date toDateFilter = params.toDateFilter
+		def Long tableFilter = null
+		try {
+			tableFilter = params.tableFilter ? Long.parseLong(params.tableFilter) : null
+		}
+		catch (Exception e) {
+			tableFilter = null
+		}
+
 		def c = Orden.createCriteria()
-		def results = c.list {
-			if (statusFilter != null) eq("status", statusFilter)	
-			if (fromDateFilter != null) ge("dateCreated", fromDateFilter.getTime())
-			if (toDateFilter != null) le("dateCreated", toDateFilter.getTime()-100)
+		def ordenList = c.list(params) {
+			if (statusFilter != null && !statusFilter.equals("All")) eq("status", statusFilter)	
+			if (fromDateFilter != null) ge("dateCreated", fromDateFilter)
+			if (toDateFilter != null) le("dateCreated", toDateFilter)
 			if (tableFilter != null) eq("table.id", tableFilter)
 		}
-//			eq("status", "Pending")
-//			or {
-//				like("holderFirstName", "Fred%")
-//				like("holderFirstName", "Barney%")
-//			}
-//			maxResults(10)
-//			order("holderLastName", "desc")
-		
-		println c
-		println results
 
-		
-		if (statusFilter == null)
-			statusFilter = "All"
-		
-		def ordenList
-		if (statusFilter.equals("Pending") || statusFilter.equals("Delivered"))
-			ordenList = Orden.findAllByStatus(statusFilter)
-		else 
-			ordenList = Orden.list(params)
-		
-		[ordenInstanceList: ordenList, ordenInstanceTotal: ordenList.count(), statusFilter: statusFilter]
-		
-		
-/*
- * 
- * 		def statusFilter = params.statusFilter
-		def fromDateFilter = params.fromDateFilter
-		def toDateFilter = params.toDateFilter
-		
-		Orden.findAllWhere()
-		
-		if (statusFilter == null)
-			statusFilter = "All"
-		
-		def ordenList
-		if (statusFilter.equals("Pending") || statusFilter.equals("Delivered"))
-			ordenList = Orden.findAllByStatus(statusFilter)
-		else 
-			ordenList = Orden.list(params)
- * 		
- */
+		[ordenInstanceList: ordenList, ordenInstanceTotal: ordenList.getTotalCount(), statusFilter: statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]
 	}
 	
 	def create = {

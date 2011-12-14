@@ -7,7 +7,6 @@
         <g:set var="entityName" value="${message(code: 'orden.label', default: 'Orden')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
         <g:javascript library="jquery" plugin="jquery"/>
-        <jqui:resources theme="darkness" />
     </head>
     <body>
         <div class="nav">
@@ -19,13 +18,42 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-
-        <div class="statusFilter">
-<!-- All, Pending y Delivered deben estar en archivo de recursos 	-->
-        	<span><g:if test="${statusFilter == 'All'}">Todos</g:if><g:else><g:link action="list">Todos</g:link></g:else></span>            
-        	<span><g:if test="${statusFilter == 'Pending'}">Pending</g:if><g:else><g:link action="list" params="['statusFilter': 'Pending']">Pending</g:link></g:else></span>
-        	<span><g:if test="${statusFilter == 'Delivered'}">Delivered</g:if><g:else><g:link action="list" params="['statusFilter': 'Delivered']">Delivered</g:link></g:else></span>
-        </div>            
+		<div id="filter" class="filter">
+	        <form action="list">
+	        	<div>
+		        	<span>Estado:</span>
+		        	<span>
+		        		<g:if test="${statusFilter == null}"><g:set var="statusFilter" value="All"/></g:if>
+			        	<select name="statusFilter">
+			        		<g:if test="${statusFilter == 'All'}"><option value="All" selected="selected">Todos</option></g:if><g:else><option value="All">Todos</option></g:else>
+			        		<g:if test="${statusFilter == 'Pending'}"><option value="Pending" selected="selected">Pendiente</option></g:if><g:else><option value="Pending">Pendiente</option></g:else>
+			        		<g:if test="${statusFilter == 'Delivered'}"><option value="Delivered" selected="selected">Entregado</option></g:if><g:else><option value="Delivered">Entregado</option></g:else>
+			        	</select>
+		        	</span>
+		        </div>
+	        	<div>
+		        	<span>Mesa:</span>
+		        	<span>
+			        	<input name="tableFilter" type="text" value="${tableFilter}"></input>
+		        	</span>
+		        </div>
+	        	<div>
+		        	<span>Desde:</span>
+		        	<span>
+		        		<g:if test="${fromDateFilter == null}"><g:set var="fromDateFilter" value="${new Date()-30}"/></g:if>
+			        	<g:datePicker name="fromDateFilter" value="${fromDateFilter}" precision="day"/>
+		        	</span>
+		        </div>		        
+	        	<div>
+		        	<span>Hasta:</span>
+		        	<span>
+		        		<g:if test="${toDateFilter == null}"><g:set var="toDateFilter" value="${new Date()+1}"/></g:if>
+			        	<g:datePicker name="toDateFilter" value="${toDateFilter}" precision="day"/>
+		        	</span>
+		        </div>
+		        <div><input type="submit" value="Filtrar"/> </div>        	        
+	        
+        </div>
             
             <div class="list">
                 <table>
@@ -79,11 +107,11 @@
                     </tbody>
                 </table>
             </div>
-            <!-- Descomentar cuando se utilice paginado  
+            
             <div class="paginateButtons">
-                <g:paginate total="${ordenInstanceTotal}" />
+                <g:paginate total="${ordenInstanceTotal}" params="${[statusFilter:statusFilter, tableFilter: tableFilter]}" />
             </div>
-            -->
+</form>
         </div>
 
         <script type="text/javascript">
@@ -95,7 +123,7 @@
                 		$("#status_" + id).html(statusReturned);
                 		$("#action_" + id).html("");
                 		//alert("${filter}");
-                		if ("${filter}" == "Pending")
+                		if ("${statusFilter}" == "Pending")
                 		{
                 			$("#fila_" + id).remove();
                 		}
