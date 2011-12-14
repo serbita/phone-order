@@ -7,8 +7,30 @@ class OrdenController {
 	}
 	
 	def list = {
+		
+		//Descomentar cuando se utilice paginado
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		[ordenInstanceList: Orden.list(params), ordenInstanceTotal: Orden.count()]
+		
+		def statusFilter = params.statusFilter
+		def Date fromDateFilter = params.fromDateFilter	
+		def Date toDateFilter = params.toDateFilter
+		def Long tableFilter = null
+		try {
+			tableFilter = params.tableFilter ? Long.parseLong(params.tableFilter) : null
+		}
+		catch (Exception e) {
+			tableFilter = null
+		}
+
+		def c = Orden.createCriteria()
+		def ordenList = c.list(params) {
+			if (statusFilter != null && !statusFilter.equals("All")) eq("status", statusFilter)	
+			if (fromDateFilter != null) ge("dateCreated", fromDateFilter)
+			if (toDateFilter != null) le("dateCreated", toDateFilter)
+			if (tableFilter != null) eq("table.id", tableFilter)
+		}
+
+		[ordenInstanceList: ordenList, ordenInstanceTotal: ordenList.getTotalCount(), statusFilter: statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]
 	}
 	
 	def create = {
@@ -97,6 +119,7 @@ class OrdenController {
 	}
 	
 	def changeStatus = {
+		//TODO: Pendiente que al cambiar el estado de una orden, queda el filtro de la busqueda desactualizado
 		def orden = Orden.findById(params.id)
 		orden.setStatus("Delivered")
 		if (!orden.hasErrors() && orden.save(flush: true)) {
