@@ -142,6 +142,54 @@
 		<h1>Ordenes</h1>
 	</div>
 	<!-- end page-heading -->
+	
+	<div id="filter" class="filter">
+	        <form action="list">
+	        	<div>
+		        	<span>Estado:</span>
+		        	<span>
+		        		<g:if test="${statusFilter == null}"><g:set var="statusFilter" value="All"/></g:if>
+			        	<select name="statusFilter">
+			        		<g:if test="${statusFilter == 'All'}"><option value="All" selected="selected">Todos</option></g:if><g:else><option value="All">Todos</option></g:else>
+			        		<g:if test="${statusFilter == 'Pending'}"><option value="Pending" selected="selected">Pendiente</option></g:if><g:else><option value="Pending">Pendiente</option></g:else>
+			        		<g:if test="${statusFilter == 'Delivered'}"><option value="Delivered" selected="selected">Entregado</option></g:if><g:else><option value="Delivered">Entregado</option></g:else>
+			        	</select>
+		        	</span>
+		        </div>
+	        	<div>
+		        	<span>Mesa:</span>
+		        	<span>
+			        	<input name="tableFilter" type="text" value="${tableFilter}"></input>
+		        	</span>
+		        </div>
+	        	<div>
+		        	<span>Desde:</span>
+		        	<span>
+		        		<g:if test="${fromDateFilter == null}"><g:set var="fromDateFilter" value="${new Date()-30}"/></g:if>
+			        	<g:datePicker name="fromDateFilter" value="${fromDateFilter}" precision="day"/>
+		        	</span>
+		        </div>		        
+	        	<div>
+		        	<span>Hasta:</span>
+		        	<span>
+		        		<g:if test="${toDateFilter == null}"><g:set var="toDateFilter" value="${new Date()+1}"/></g:if>
+			        	<g:datePicker name="toDateFilter" value="${toDateFilter}" precision="day"/>
+		        	</span>
+		        </div>
+		        <div><input type="submit" value="Filtrar"/> </div>        	        
+
+                            <g:sortableColumn property="dateCreated" title="${message(code: 'orden.dateCreated.label', default: 'Date Created')}" />
+
+                        
+                            <td><g:formatDate format="yyyy-MM-dd" date="${fieldValue(bean: ordenInstance, field: "dateCreated")}"/></td>
+                        
+				</form> <!--  end filter form -->
+            
+            <div class="paginateButtons">
+                <g:paginate total="${ordenInstanceTotal}" params="${[statusFilter:statusFilter, tableFilter: tableFilter]}" />
+            </div>
+	
+	
 
 	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
@@ -158,9 +206,7 @@
 		<div id="content-table-inner">
 		
 			<!--  start table-content  -->
-			<div id="table-content">
-			
-	
+			<div id="table-content">	 
 		 
 				<!--  start product-table ..................................................................................... -->
 				<form id="mainform" action="">
@@ -208,7 +254,7 @@
 				
 				</table>
 				<!--  end product-table................................... --> 
-				</form>
+				</form> <!--  end mainform -->
 			</div>
 <!--a href="#" onclick="javascript:changeStatus(1,'Delivered');" title="Cambiar a Entregado" >1 a delivered</a><br -->
 <!--a href="#" onclick="javascript:changeStatus(1,'Pending');" title="Cambiar a Entregado" >1 a pending</a><br-->
@@ -282,51 +328,7 @@
     
     
     
-		<div id="filter" class="filter">
-	        <form action="list">
-	        	<div>
-		        	<span>Estado:</span>
-		        	<span>
-		        		<g:if test="${statusFilter == null}"><g:set var="statusFilter" value="All"/></g:if>
-			        	<select name="statusFilter">
-			        		<g:if test="${statusFilter == 'All'}"><option value="All" selected="selected">Todos</option></g:if><g:else><option value="All">Todos</option></g:else>
-			        		<g:if test="${statusFilter == 'Pending'}"><option value="Pending" selected="selected">Pendiente</option></g:if><g:else><option value="Pending">Pendiente</option></g:else>
-			        		<g:if test="${statusFilter == 'Delivered'}"><option value="Delivered" selected="selected">Entregado</option></g:if><g:else><option value="Delivered">Entregado</option></g:else>
-			        	</select>
-		        	</span>
-		        </div>
-	        	<div>
-		        	<span>Mesa:</span>
-		        	<span>
-			        	<input name="tableFilter" type="text" value="${tableFilter}"></input>
-		        	</span>
-		        </div>
-	        	<div>
-		        	<span>Desde:</span>
-		        	<span>
-		        		<g:if test="${fromDateFilter == null}"><g:set var="fromDateFilter" value="${new Date()-30}"/></g:if>
-			        	<g:datePicker name="fromDateFilter" value="${fromDateFilter}" precision="day"/>
-		        	</span>
-		        </div>		        
-	        	<div>
-		        	<span>Hasta:</span>
-		        	<span>
-		        		<g:if test="${toDateFilter == null}"><g:set var="toDateFilter" value="${new Date()+1}"/></g:if>
-			        	<g:datePicker name="toDateFilter" value="${toDateFilter}" precision="day"/>
-		        	</span>
-		        </div>
-		        <div><input type="submit" value="Filtrar"/> </div>        	        
-
-                            <g:sortableColumn property="dateCreated" title="${message(code: 'orden.dateCreated.label', default: 'Date Created')}" />
-
-                        
-                            <td><g:formatDate format="yyyy-MM-dd" date="${fieldValue(bean: ordenInstance, field: "dateCreated")}"/></td>
-                        
-        
-            
-            <div class="paginateButtons">
-                <g:paginate total="${ordenInstanceTotal}" params="${[statusFilter:statusFilter, tableFilter: tableFilter]}" />
-            </div>
+		
 
 
 
