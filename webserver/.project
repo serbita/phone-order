@@ -23,40 +23,50 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
 	<linkedResources>
-		<!--link>
-			<name>.link_to_grails_plugins</name>
-			<type>2</type>
-			<locationURI>GRAILS_ROOT/1.3.7/projects/webserver/plugins</locationURI>
-		</link-->
 		<link>
-			<name>jquery-1.7-grails-app-conf</name>
+			<name>jquery-1.7.1-grails-app-conf</name>
 			<type>2</type>
-			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7/grails-app/conf</location>
+			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7.1/grails-app/conf</location>
 		</link>
 		<link>
-			<name>jquery-1.7-grails-app-i18n</name>
+			<name>jquery-1.7.1-grails-app-i18n</name>
 			<type>2</type>
-			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7/grails-app/i18n</location>
+			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7.1/grails-app/i18n</location>
 		</link>
 		<link>
-			<name>jquery-1.7-grails-app-services</name>
+			<name>jquery-1.7.1-grails-app-services</name>
 			<type>2</type>
-			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7/grails-app/services</location>
+			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7.1/grails-app/services</location>
 		</link>
 		<link>
-			<name>jquery-1.7-grails-app-taglib</name>
+			<name>jquery-1.7.1-grails-app-taglib</name>
 			<type>2</type>
-			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7/grails-app/taglib</location>
+			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7.1/grails-app/taglib</location>
 		</link>
 		<link>
-			<name>jquery-1.7-src-groovy</name>
+			<name>jquery-1.7.1-src-groovy</name>
 			<type>2</type>
-			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7/src/groovy</location>
+			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-1.7.1/src/groovy</location>
+		</link>
+		<link>
+			<name>jquery-ui-1.8.15-grails-app-conf</name>
+			<type>2</type>
+			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-ui-1.8.15/grails-app/conf</location>
+		</link>
+		<link>
+			<name>jquery-ui-1.8.15-grails-app-i18n</name>
+			<type>2</type>
+			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-ui-1.8.15/grails-app/i18n</location>
+		</link>
+		<link>
+			<name>jquery-ui-1.8.15-grails-app-taglib</name>
+			<type>2</type>
+			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/jquery-ui-1.8.15/grails-app/taglib</location>
 		</link>
 		<link>
 			<name>tomcat-1.3.7-src-groovy</name>
 			<type>2</type>
-			<location>GRAILS_ROOT/1.3.7/projects/webserver/plugins/tomcat-1.3.7/src/groovy</location>
+			<locationURI>GRAILS_ROOT/1.3.7/projects/webserver/plugins/tomcat-1.3.7/src/groovy</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat;
+
 class OrdenController {
 	
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -12,8 +14,13 @@ class OrdenController {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		
 		def statusFilter = params.statusFilter
-		def Date fromDateFilter = params.fromDateFilter	
-		def Date toDateFilter = params.toDateFilter
+		
+		def Date fromDateFilter = null
+		fromDateFilter = params.fromDateFilter ? new Date().parse("dd/MM/yy", params.fromDateFilter) : null
+		
+		def Date toDateFilter = null
+		toDateFilter = params.toDateFilter ? new Date().parse("dd/MM/yy", params.toDateFilter) : null
+		
 		def Long tableFilter = null
 		try {
 			tableFilter = params.tableFilter ? Long.parseLong(params.tableFilter) : null
@@ -29,8 +36,10 @@ class OrdenController {
 			if (toDateFilter != null) le("dateCreated", toDateFilter)
 			if (tableFilter != null) eq("table.id", tableFilter)
 		}
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
 
-		[ordenInstanceList: ordenList, ordenInstanceTotal: ordenList.getTotalCount(), statusFilter: statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]
+		[ordenInstanceList: ordenList, ordenInstanceTotal: ordenList.getTotalCount(), statusFilter: statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter ? formatter.format(fromDateFilter) : null, toDateFilter: toDateFilter ? formatter.format(toDateFilter): null]
 	}
 	
 	def create = {

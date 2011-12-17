@@ -4,9 +4,29 @@
         <meta name="layout" content="main2" />
         <g:set var="entityName" value="${message(code: 'orden.label', default: 'Orden')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
-        <g:javascript library="jquery" plugin="jquery"/>
+        <g:javascript library="jquery"/>
+		<jqui:resources themeCss="${resource(dir:'css/jquery-ui/themes',file:'jquery-ui-1.8.15.custom.css')}"/>
+		  
+       <script type="text/javascript">
+
+        $(document).ready(function()
+        {          
+          var defaultFromDate = new Date(new Date().getTime() - 30*24*60*60*1000);
+          $("#fromDateFilter").datepicker({dateFormat: 'dd/mm/yy'});
+          <g:if test="${fromDateFilter == null}">$("#fromDateFilter").datepicker( "setDate" , defaultFromDate  );</g:if>
+          <g:else>$("#fromDateFilter").datepicker( "setDate" , '${fromDateFilter}'  );</g:else>
+
+          var defaultToDate = new Date(new Date().getTime() + 1*24*60*60*1000);
+          $("#toDateFilter").datepicker({dateFormat: 'dd/mm/yy'});
+          <g:if test="${toDateFilter == null}">$("#toDateFilter").datepicker( "setDate" ,  defaultToDate );</g:if>
+          <g:else>$("#toDateFilter").datepicker( "setDate" , '${toDateFilter}'  );</g:else>
+        })
+        
+    </script>
+        
     </head>
     <body>
+    
     
 <!-- Start: page-top-outer -->
 <div id="page-top-outer">    
@@ -165,12 +185,11 @@
 				</td>
 				<td><input name="tableFilter" type="text" value="${tableFilter}"></input></td>
 				<td>
-						        		<g:if test="${fromDateFilter == null}"><g:set var="fromDateFilter" value="${new Date()-30}"/></g:if>
-			        	<g:datePicker name="fromDateFilter" value="${fromDateFilter}" precision="day"/>
+			        					<input type="text" id="fromDateFilter" name="fromDateFilter"/>
 				
 				</td>
-				<td>		        		<g:if test="${toDateFilter == null}"><g:set var="toDateFilter" value="${new Date()+1}"/></g:if>
-			        	<g:datePicker name="toDateFilter" value="${toDateFilter}" precision="day"/>
+				<td>		        		
+			        					<input type="text" id="toDateFilter" name="toDateFilter"/>
 </td>
 				<td><input type="submit" value="Filtrar"/></td>
 			</tr>
@@ -179,7 +198,7 @@
 	</form> <!--  end filter form -->
     </div>  <!--  end div filter -->
             <div class="paginateButtons">
-                <g:paginate total="${ordenInstanceTotal}" params="${[statusFilter:statusFilter, tableFilter: tableFilter]}" />
+                <g:paginate total="${ordenInstanceTotal}" params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}" />
             </div>
 
 	
@@ -205,18 +224,18 @@
 				<form id="mainform" action="">
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">				
 				<tr>
-					<th class="table-header-repeat line-left"><a href="">Id</a></th>
-					<th class="table-header-repeat line-left"><a href="">Fecha</a></th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">Item</a>	</th>				
-
-					<th class="table-header-repeat line-left minwidth-1"><a href="">Cantidad</a></th>
-					<th class="table-header-repeat line-left"><a href="">Precio</a></th>
-					<th class="table-header-repeat line-left"><a href="">Total</a></th>
-					<th class="table-header-repeat line-left"><a href="">Estado</a></th>
+					<g:sortableColumn class="table-header-repeat line-left" property="id" title="Id" params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}" />
+					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="dateCreated" title="Fecha"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>
+					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="item.title" title="Item"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>				
+				
+					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="quantity" title="Cantidad"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>
+					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="unit_price" title="Precio"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>
+					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="total_amount" title="Total"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>
+					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="status" title="Estado"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>
 					<th class="table-header-options line-left"><a href="">Cambiar estado</a></th>
 				</tr>
                     <g:each in="${ordenInstanceList}" status="i" var="ordenInstance">
-                        <tr class="${(i % 2) == 0 ? 'alternate-row' : 'even'}">
+                        <tr id="fila_${ordenInstance.id}" class="${(i % 2) == 0 ? 'alternate-row' : 'even'}">
                         
                             <td><g:link action="show" id="${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "id")}</g:link></td>
                             <td>${fieldValue(bean: ordenInstance, field: "dateCreated")}</td>
@@ -332,22 +351,32 @@
                     data: "id=" + id + "&status=" + status,
                     success: function(statusReturned) {
                 		$("#status_" + id).html(statusReturned);
-var local_status;
-var local_class;
-if (statusReturned == 'Delivered') {
-        local_status = 'Pending';
-local_class = 'icon-2 info-tooltip';
-local_title = 'Cambiar a Pendiente';
-                } else {
-local_status = 'Delivered';
-local_class = 'icon-5 info-tooltip'
-local_title = 'Cambiar a Entredado';
-}
+						var local_status;
+						var local_class;
+						if (statusReturned == 'Delivered') {
+							local_status = 'Pending';
+							local_class = 'icon-2 info-tooltip';
+							local_title = 'Cambiar a Pendiente';
+							if ("${statusFilter}" == "Pending")
+	                		{
+	                			$("#fila_" + id).remove();
+	                		}
+						} else {
+							local_status = 'Delivered';
+							local_class = 'icon-5 info-tooltip'
+							local_title = 'Cambiar a Entregado';
+							if ("${statusFilter}" == "Delivered")
+	                		{
+	                			$("#fila_" + id).remove();
+	                		}
+						}
 
                 		$("#action_" + id).html('<a href="#" onclick="javascript:changeStatus('+id+',\''+local_status+'\');"  class="'+local_class+'" title="'+local_title+'" ></a>');
                     }
                   });
                };
+
+             
         </script>
 
     </body>
