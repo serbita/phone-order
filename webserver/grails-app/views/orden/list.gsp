@@ -20,6 +20,7 @@
           $("#toDateFilter").datepicker({dateFormat: 'dd/mm/yy'});
           <g:if test="${toDateFilter == null}">$("#toDateFilter").datepicker( "setDate" ,  defaultToDate );</g:if>
           <g:else>$("#toDateFilter").datepicker( "setDate" , '${toDateFilter}'  );</g:else>
+
         })
         
     </script>
@@ -154,6 +155,7 @@
  
 <!-- start content-outer ........................................................................................................................START -->
 <div id="content-outer">
+
 <!-- start content -->
 <div id="content">
 
@@ -161,7 +163,7 @@
 	<div id="page-heading">
 		<h1>Ordenes</h1>
 	</div>
-	<!-- end page-heading -->
+	<!-- end page-heading -->	
 	
 	<div class="filter">
 		<form action="list">	
@@ -174,29 +176,31 @@
 				<th></th>
 			</tr>
 			<tr>
-				<td>
+				<td class="filter-table">
 						        	<g:if test="${statusFilter == null}"><g:set var="statusFilter" value="All"/></g:if>
-			        	<select name="statusFilter">
+			        	<select name="statusFilter" class="filter-table-input">
 			        		<g:if test="${statusFilter == 'All'}"><option value="All" selected="selected">Todos</option></g:if><g:else><option value="All">Todos</option></g:else>
 			        		<g:if test="${statusFilter == 'Pending'}"><option value="Pending" selected="selected">Pendiente</option></g:if><g:else><option value="Pending">Pendiente</option></g:else>
 			        		<g:if test="${statusFilter == 'Delivered'}"><option value="Delivered" selected="selected">Entregado</option></g:if><g:else><option value="Delivered">Entregado</option></g:else>
 			        	</select>
 					
 				</td>
-				<td><input name="tableFilter" type="text" value="${tableFilter}"></input></td>
-				<td>
-			        					<input type="text" id="fromDateFilter" name="fromDateFilter"/>
+				<!-- <td><input name="tableFilter" type="text" value="${tableFilter}"></input></td> -->
+				<td class="filter-table"><g:select name="tableFilter" from="${Table.list()}" optionKey="id" value="${tableFilter}" class="filter-table-input" /></td>
+				<td class="filter-table">
+			        					<input type="text" id="fromDateFilter" name="fromDateFilter" class="filter-table-input"/>
 				
 				</td>
-				<td>		        		
-			        					<input type="text" id="toDateFilter" name="toDateFilter"/>
+				<td class="filter-table">		        		
+			        					<input type="text" id="toDateFilter" name="toDateFilter" class="filter-table-input"/>
 </td>
-				<td><input type="submit" value="Filtrar"/></td>
+				<td><input type="submit" value="Filtrar" class="filter-table-button"/></td>
 			</tr>
 		</table>
                         
 	</form> <!--  end filter form -->
     </div>  <!--  end div filter -->
+
             <div class="paginateButtons">
                 <g:paginate total="${ordenInstanceTotal}" params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}" />
             </div>
@@ -226,6 +230,7 @@
 				<tr>
 					<g:sortableColumn class="table-header-repeat line-left" property="id" title="Id" params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}" />
 					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="dateCreated" title="Fecha"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>
+					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="table.name" title="Mesa"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>
 					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="item.title" title="Item"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>				
 				
 					<g:sortableColumn class="table-header-repeat line-left minwidth-1" property="quantity" title="Cantidad"  params="${[statusFilter:statusFilter, tableFilter: tableFilter, fromDateFilter: fromDateFilter, toDateFilter: toDateFilter]}"/>
@@ -239,6 +244,7 @@
                         
                             <td><g:link action="show" id="${ordenInstance.id}">${fieldValue(bean: ordenInstance, field: "id")}</g:link></td>
                             <td>${fieldValue(bean: ordenInstance, field: "dateCreated")}</td>
+                            <td>${fieldValue(bean: ordenInstance, field: "table.name")}</td>
 
                             <td>${fieldValue(bean: ordenInstance, field: "item.title")}</td>
                             <td>${fieldValue(bean: ordenInstance, field: "quantity")}</td>

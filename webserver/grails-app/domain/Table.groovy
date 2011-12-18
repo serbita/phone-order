@@ -14,4 +14,8 @@ class Table {
         static constraints = {
              description(nullable:true)
         }
+		
+		String toString() {
+			return name + " (" + id + ")"
+		}
 }

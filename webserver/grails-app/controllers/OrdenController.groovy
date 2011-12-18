@@ -9,8 +9,7 @@ class OrdenController {
 	}
 	
 	def list = {
-		
-		//Descomentar cuando se utilice paginado
+
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		
 		def statusFilter = params.statusFilter

@@ -7,7 +7,6 @@
     </head>
     <body>
         <div>
-            <h1>Muro Bar</h1>
             <div>
                 <table>
                     <thead>
